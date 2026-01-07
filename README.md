@@ -1,12 +1,15 @@
 # stcflash
 
-理论支持所有的 STC! 验证支持 Ai8051U 等。
-Theory supports all STCS! Verify support for Ai8051U, etc.
+## 理论支持所有的 STC! 验证支持 Ai8051U 等。
+## Theory supports all STCS! Verify support for Ai8051U, etc.
 
-stcflash 是基于 stcgal 的二次开发！
-stcflash is a secondary development based on stcgal!
+### stcflash 是基于 stcgal 的二次开发！
+### stcflash is a secondary development based on stcgal!
 
 Stcgal 原始项目地址：https://github.com/grigorig/stcgal
+
+---
+
 Stcgal original project address: https://github.com/grigorig/stcgal
 
 ## 硬件连接 / Hardware Connection
