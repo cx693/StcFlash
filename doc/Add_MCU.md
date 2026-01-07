@@ -1,15 +1,15 @@
-# How to Add Support for New MCU Chips to stcgal
+# How to Add Support for New MCU Chips to stcflash
 
 ## 📌 Overview
 
-stcgal is a **STC MCU ISP Flash Programming Tool** that supports a wide range of STC 51/32 series microcontrollers. This document details how to add support for new chips.
+stcflash (The original stcgal) is a **STC MCU ISP Flash Programming Tool** that supports a wide range of STC 51/32 series microcontrollers. This document details how to add support for new chips.
 
 ---
 
 ## 🏗️ Project Architecture
 
 ```
-User Command Line (stcgal -p /dev/ttyUSB0 firmware.hex)
+User Command Line (stcflash -p /dev/ttyUSB0 firmware.hex)
     ↓
 frontend.py (Frontend Selection Layer - Argument Parsing)
     ↓
@@ -31,7 +31,7 @@ Main files that need to be modified when adding new chips:
 
 ### Step 1: Add Chip Model in models.py
 
-**File Location**: `stcgal/models.py`
+**File Location**: `stcflash/models.py`
 
 **Specific Location**: `models` tuple in `MCUModelDatabase` class (around lines 34-1175)
 
@@ -76,7 +76,7 @@ MCUModel(name='STC15F204E', magic=0xf2d0, total=65536, code=61440, eeprom=4096,
 
 **Key Points**:
 - Magic value must be unique (cannot be duplicated with other chips)
-- You can obtain the magic value by running stcgal and connecting to the chip, then checking debug output
+- You can obtain the magic value by running stcflash and connecting to the chip, then checking debug output
 - Or consult the chip's official datasheet
 
 ---
@@ -112,7 +112,7 @@ MCUModel(name='STC15F204E', magic=0xf2d0, total=65536, code=61440, eeprom=4096,
 
 ### Step 3: Add Rule in Protocol Auto-detection
 
-**File Location**: `stcgal/protocols.py`
+**File Location**: `stcflash/protocols.py`
 
 **Specific Location**: Lines 71-91 in `StcAutoProtocol` class's `initialize_model()` method
 
@@ -176,7 +176,7 @@ re.match(pattern, "STC15W104")   # False
 
 ### Step 4: (Optional) Add Chip-specific Configuration Options
 
-**File Location**: `stcgal/options.py`
+**File Location**: `stcflash/options.py`
 
 This step is only needed if the chip has special configuration options (such as RC calibration, watchdog, low voltage reset, etc.).
 
@@ -224,9 +224,9 @@ class YourChipOption(BaseOption):
 
 ### Step 5: Register New Protocol in Frontend (Usually Not Needed)
 
-**File Location**: `stcgal/frontend.py`
+**File Location**: `stcflash/frontend.py`
 
-**Location**: `initialize_protocol()` method of `StcGal` class (lines 52-82)
+**Location**: `initialize_protocol()` method of `stcflash` class (lines 52-82)
 
 **Current Code**:
 ```python
@@ -242,7 +242,7 @@ def initialize_protocol(self, opts):
 ```
 
 **Explanation**:
-- When using auto-detection mode (`-P auto`), stcgal automatically matches the correct protocol based on magic value
+- When using auto-detection mode (`-P auto`), stcflash automatically matches the correct protocol based on magic value
 - Usually no need to modify this
 - Only add when creating entirely new protocol classes
 
@@ -253,8 +253,8 @@ def initialize_protocol(self, opts):
 ### 1. Check Magic Value Uniqueness
 
 ```bash
-cd c:\Users\CXi\Desktop\stcgal-master
-grep -o "magic=0x[a-fA-F0-9]*" stcgal/models.py | sort | uniq -d
+cd c:\Users\CXi\Desktop\stcflash-master
+grep -o "magic=0x[a-fA-F0-9]*" stcflash/models.py | sort | uniq -d
 ```
 
 If there is output, it means there are duplicate magic values that need to be modified.
@@ -282,7 +282,7 @@ for name in chip_names:
 Connect the new chip and try programming:
 
 ```bash
-python stcgal.py -p COM3 -P auto firmware.hex
+python stcflash.py -p COM3 -P auto firmware.hex
 ```
 
 Observe the output to check if:
@@ -335,7 +335,7 @@ protocol_database = [
 python -c "import re; print(bool(re.match(r'XYZ8051', 'XYZ8051-32K')))"  # Output: True
 
 # Test programming
-python stcgal.py -p COM3 test.hex
+python stcflash.py -p COM3 test.hex
 ```
 
 ---
@@ -380,7 +380,7 @@ python stcgal.py -p COM3 test.hex
 ## 📚 Reference Resources
 
 - **STC Official**: http://stcmcu.com/
-- **Project Homepage**: https://github.com/grigorig/stcgal
+- **Project Homepage**: https://github.com/grigorig/stcflash
 - **Protocol Documentation**: See protocol description files in `doc/reverse-engineering/` directory
 - **Existing Chips**: models.py contains 150+ chip definitions that can serve as reference
 
@@ -404,9 +404,9 @@ Before submitting a new chip, verify the following:
 ## 🚀 Next Steps
 
 1. Connect new chip to programmer
-2. Run stcgal in auto-detection mode
+2. Run stcflash in auto-detection mode
 3. Verify chip is correctly identified
 4. Try programming a test firmware
 5. Verify programming is successful
 
-Success! Your new chip is now supported by stcgal.
+Success! Your new chip is now supported by stcflash.

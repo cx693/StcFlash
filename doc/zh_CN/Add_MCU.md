@@ -1,15 +1,15 @@
-# 如何向 stcgal 添加新的 MCU 芯片支持
+# 如何向 stcflash 添加新的 MCU 芯片支持
 
 ## 📌 概述
 
-stcgal 是一个 **STC MCU ISP Flash 编程工具**，支持多种 STC 51/32 系列微控制器。本文档详细说明如何添加新芯片支持。
+stcflash(原 stcgal) 是一个 **STC MCU ISP Flash 编程工具**，支持多种 STC 51/32 系列微控制器。本文档详细说明如何添加新芯片支持。
 
 ---
 
 ## 🏗️ 项目架构
 
 ```
-用户命令行 (stcgal -p /dev/ttyUSB0 firmware.hex)
+用户命令行 (stcflash -p /dev/ttyUSB0 firmware.hex)
     ↓
 frontend.py (前端选择层 - 参数解析)
     ↓
@@ -31,7 +31,7 @@ models.py (芯片数据库 - 芯片规格定义)
 
 ### 第 1 步：在 models.py 中添加芯片模型
 
-**文件位置**：`stcgal/models.py`
+**文件位置**：`stcflash/models.py`
 
 **具体位置**：`MCUModelDatabase` 类中的 `models` 元组（大约第34-1175行）
 
@@ -76,7 +76,7 @@ MCUModel(name='STC15F204E', magic=0xf2d0, total=65536, code=61440, eeprom=4096,
 
 **关键点**：
 - Magic 值必须唯一（不能与其他芯片重复）
-- 可以通过运行 stcgal 连接芯片后，从调试输出获取 magic 值
+- 可以通过运行 stcflash 连接芯片后，从调试输出获取 magic 值
 - 或查看芯片官方规格书/数据表
 
 ---
@@ -112,7 +112,7 @@ MCUModel(name='STC15F204E', magic=0xf2d0, total=65536, code=61440, eeprom=4096,
 
 ### 第 3 步：在协议自动检测中添加规则
 
-**文件位置**：`stcgal/protocols.py`
+**文件位置**：`stcflash/protocols.py`
 
 **具体位置**：第 71-91 行 `StcAutoProtocol` 类的 `initialize_model()` 方法
 
@@ -176,7 +176,7 @@ re.match(pattern, "STC15W104")   # False
 
 ### 第 4 步：（可选）添加芯片特定配置选项
 
-**文件位置**：`stcgal/options.py`
+**文件位置**：`stcflash/options.py`
 
 只有在芯片有特殊配置选项（如 RC 校准、看门狗、低电压复位等）时才需要此步骤。
 
@@ -224,9 +224,9 @@ class YourChipOption(BaseOption):
 
 ### 第 5 步：在前端注册新协议（通常不需要）
 
-**文件位置**：`stcgal/frontend.py`
+**文件位置**：`stcflash/frontend.py`
 
-**位置**：`StcGal` 类的 `initialize_protocol()` 方法（第52-82行）
+**位置**：`stcflash` 类的 `initialize_protocol()` 方法（第52-82行）
 
 **现有代码**：
 ```python
@@ -242,7 +242,7 @@ def initialize_protocol(self, opts):
 ```
 
 **说明**：
-- 使用自动检测时（`-P auto`），stcgal 会根据 magic 值自动匹配到正确的协议
+- 使用自动检测时（`-P auto`），stcflash 会根据 magic 值自动匹配到正确的协议
 - 通常不需要修改此处
 - 只有创建全新协议类时才需要添加
 
@@ -253,8 +253,8 @@ def initialize_protocol(self, opts):
 ### 1. 检查 Magic 值唯一性
 
 ```bash
-cd c:\Users\CXi\Desktop\stcgal-master
-grep -o "magic=0x[a-fA-F0-9]*" stcgal/models.py | sort | uniq -d
+cd c:\Users\CXi\Desktop\stcflash-master
+grep -o "magic=0x[a-fA-F0-9]*" stcflash/models.py | sort | uniq -d
 ```
 
 如果有输出，说明存在重复的 magic 值，需要修改。
@@ -282,7 +282,7 @@ for name in chip_names:
 连接新芯片并尝试编程：
 
 ```bash
-python stcgal.py -p COM3 -P auto firmware.hex
+python stcflash.py -p COM3 -P auto firmware.hex
 ```
 
 观察输出，检查是否：
@@ -335,7 +335,7 @@ protocol_database = [
 python -c "import re; print(bool(re.match(r'XYZ8051', 'XYZ8051-32K')))"  # 输出: True
 
 # 测试编程
-python stcgal.py -p COM3 test.hex
+python stcflash.py -p COM3 test.hex
 ```
 
 ---
@@ -380,7 +380,7 @@ python stcgal.py -p COM3 test.hex
 ## 📚 参考资源
 
 - **STC 官方**：http://stcmcu.com/
-- **项目主页**：https://github.com/grigorig/stcgal
+- **项目主页**：https://github.com/grigorig/stcflash
 - **协议文档**：查看 `doc/reverse-engineering/` 目录中的协议说明文件
 - **现有芯片**：models.py 中有 150+ 种芯片定义，可作为参考
 
@@ -404,9 +404,9 @@ python stcgal.py -p COM3 test.hex
 ## 🚀 后续步骤
 
 1. 连接新芯片到编程器
-2. 运行 stcgal 的自动检测模式
+2. 运行 stcflash 的自动检测模式
 3. 验证芯片被正确识别
 4. 尝试编程一个测试固件
 5. 验证编程成功
 
-成功！现在你的新芯片已支持 stcgal。
+成功！现在你的新芯片已支持 stcflash。
