@@ -10,8 +10,7 @@ usage: stcflash [-h] [-e] [-a] [-A {dtr,rts}] [-r RESETCMD]
               [-V]
               [code_image] [eeprom_image]
 
-stcflash 1.7 - an STC MCU ISP flash tool
-(C) 2014-2018 Grigori Goronzy and others
+stcflash 0.1 - an STC MCU ISP flash tool
 https://github.com/grigorig/stcflash
 
 positional arguments:

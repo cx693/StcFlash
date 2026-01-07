@@ -28,25 +28,24 @@ with open("doc/PyPI.md", "r") as fh:
     long_description = fh.read()
 
 setup(
-    name = "stcgal",
+    name = "stcflash",
     version = stcflash.__version__,
-    packages = find_packages(exclude=["doc", "tests"]),
+    packages = find_packages(exclude=["doc"]),
     install_requires = ["pyserial>=3.0", "tqdm>=4.0.0"],
     extras_require = {
         "usb": ["pyusb>=1.0.0"]
     },
     entry_points = {
         "console_scripts": [
-            "stcgal = stcgal.frontend:cli",
+            "stcflash = stcflash.frontend:cli",
         ],
     },
     description = "STC MCU ISP flash tool",
     long_description = long_description,
-    long_description_content_type = "text/markdown",
     keywords = "stc mcu microcontroller 8051 mcs-51",
-    url = "https://github.com/grigorig/stcgal",
-    author = "Grigori Goronzy",
-    author_email = "greg@kinoho.net",
+    url = "https://github.com/cx693/StcFlash",
+    author = "CXi",
+    author_email = "pycx0@qq.com",
     license = "MIT License",
     platforms = "any",
     classifiers = [
