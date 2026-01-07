@@ -110,6 +110,8 @@ stcflash -h
 
 ## 更多信息 / Further Information
 
+* [添加新的 MCU 型号](doc/zh_CN/Add_MCU.md) / [Adding new MCU models](doc/Add_MCU.md)
+
 * [如何使用 stcflash](doc/zh_CN/USAGE.md) / [How to use stcflash](doc/USAGE.md)
 
 * [常见问题](doc/zh_CN/FAQ.md) / [Frequently Asked Questions](doc/FAQ.md)
