@@ -1,5 +1,8 @@
 # stcflash
 
+理论支持所有的 STC! 验证支持 Ai8051U 等。
+Theory supports all STCS! Verify support for Ai8051U, etc.
+
 stcflash 是基于 stcgal 的二次开发！
 stcflash is a secondary development based on stcgal!
 
