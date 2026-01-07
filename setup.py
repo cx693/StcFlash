@@ -21,16 +21,21 @@
 # SOFTWARE.
 #
 
+import os
 import stcflash
 from setuptools import setup, find_packages
 
-with open("doc/PyPI.md", "r") as fh:
+setup_dir = os.path.dirname(os.path.abspath(__file__))
+pypi_md_path = os.path.join(setup_dir, "doc", "PyPI.md")
+
+with open(pypi_md_path, "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
     name = "stcflash",
     version = stcflash.__version__,
     packages = find_packages(exclude=["doc"]),
+    include_package_data = True,
     install_requires = ["pyserial>=3.0", "tqdm>=4.0.0"],
     extras_require = {
         "usb": ["pyusb>=1.0.0"]
@@ -42,6 +47,7 @@ setup(
     },
     description = "STC MCU ISP flash tool",
     long_description = long_description,
+    long_description_content_type = "text/markdown",
     keywords = "stc mcu microcontroller 8051 mcs-51",
     url = "https://github.com/cx693/StcFlash",
     author = "CXi",
