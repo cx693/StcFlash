@@ -6,6 +6,21 @@ stcflash(原 stcgal) 是一个 **STC MCU ISP Flash 编程工具**，支持多种
 
 ---
 
+## 👍推荐使用 ##
+如果你们可以研究出来失败的逻辑，理论上支持所有的MCU（不限于STC、STM、ESP等等）。
+If you can work out the logic of failure, theoretically all MCUs can be supported (not limited to STC, STM, ESP, etc.).
+
+本项目支持你们提交代码修改完善这个项目！
+This project welcomes you to submit code to improve it!
+
+文件地址：https://wwanr.lanzouw.com/b00mq2gzoh
+File address: https://wwanr.lanzouw.com/b00mq2gzoh
+
+密码：gu10
+Password: gu10
+
+---
+
 ## 🏗️ 项目架构
 
 ```

@@ -6,6 +6,17 @@ stcflash (The original stcgal) is a **STC MCU ISP Flash Programming Tool** that 
 
 ---
 
+## 👍Recommended for use ##
+If you can work out the logic of failure, theoretically all MCUs can be supported (not limited to STC, STM, ESP, etc.).
+
+This project welcomes you to submit code to improve it!
+
+File address: https://wwanr.lanzouw.com/b00mq2gzoh
+
+Password: gu10
+
+---
+
 ## 🏗️ Project Architecture
 
 ```
