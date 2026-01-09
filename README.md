@@ -1,5 +1,10 @@
 # stcflash
 
+---
+If you want to join my project!/如果你想加入我的项目！
+Please submit your application and then send me an email at the following address: pycx0@qq.com
+请提交申请后，给我发邮箱📮：pycx0@qq.com
+---
 ## 理论支持所有的 STC! 验证支持 Ai8051U 等。
 ## Theory supports all STCS! Verify support for Ai8051U, etc.
 
